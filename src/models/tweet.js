@@ -3,20 +3,20 @@ const mongoose = require('mongoose');
 const tweetSchema = new mongoose.Schema({
     content : {
         type: String,
-        require : true
+        required : true,
+        max : [250, 'tweet cannot exceed 250 characters']
     },
-    userEmail:{
-        type: String
-    },
-    comments:[
-        {
-            type : mongoose.Schema.Types.ObjectId,
-            ref: 'Comment'
-        }
-    ] 
+    hashtags : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref: 'Hashtag'
+    }
 },{
     timestamps: true
-});
+}); 
+
+tweetSchema.virtual('contentWithEmail').get(function process(){
+    return `${this.content} is created by ${this.userEmail}`;
+})
 
 const Tweet = mongoose.model('Tweet', tweetSchema);
 module.exports = Tweet; 
