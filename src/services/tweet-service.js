@@ -24,7 +24,6 @@ class TweetService {
 
         //finding new tags by comapring all old tags
         let newTags = tags.filter(tag => !titleOfPresenttags.includes(tag));
-        console.log(newTags);
         newTags = newTags.map(tag => {
             return { title: tag, tweets: [tweet.id] }
         });
