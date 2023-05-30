@@ -1,4 +1,4 @@
-import { TweetRepository, HashtagRepository } from '../repository/index.js'
+import { TweetRepository , HashtagRepository} from '../repository/index.js';
 
 class TweetService {
     constructor() {
@@ -9,7 +9,7 @@ class TweetService {
     async create(data) {
         const content = data.content;
         var tags = content.match(/#[a-zA-Z0-9_]+/g);
-        tags = tags.map((tag) => tag.substring(1));
+        tags = tags.map((tag) => tag.substring(1)).map((tag)=> tag.toLowerCase());
 
         const tweet = await this.tweetRepository.create(data);
         let alreadyPresentTags = await this.hashtagRepository.findByName(tags);
@@ -30,7 +30,7 @@ class TweetService {
         });
         //creating hashtags that are new 
         await this.hashtagRepository.bulkCreate(newTags);
-
+        // await tweet.hashtags.push()
         return tweet;
     }
 }
