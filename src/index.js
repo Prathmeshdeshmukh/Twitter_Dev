@@ -1,6 +1,6 @@
-const express=  require('express');
+import express from 'express'
 const app = express();
-const connect = require('./config/database-config');
+import connect from './config/database-config.js';
 
 
 
@@ -12,5 +12,5 @@ app.listen(PORT, async()=>{
     await connect();
     console.log("mongodb connected");
     
-
+ 
 })   
