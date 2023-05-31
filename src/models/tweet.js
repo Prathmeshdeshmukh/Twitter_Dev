@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { mongo } from "mongoose";
 
 const tweetSchema = new mongoose.Schema({
     content : {
@@ -6,6 +6,12 @@ const tweetSchema = new mongoose.Schema({
         required : true,
         max : [250, 'tweet cannot exceed 250 characters']
     },
+    likes : [
+        {
+        type: mongoose.Schema.Types.ObjectId,
+        ref : 'Like'
+    }
+]
 },{
     timestamps: true
 }); 
