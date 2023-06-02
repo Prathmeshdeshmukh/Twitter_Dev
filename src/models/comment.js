@@ -1,26 +1,32 @@
 import mongoose from "mongoose";
 
 const commentSchema = new mongoose.Schema({
-    content : {
+    content: {
         type: String,
-        require : true
+        require: true
     },
-    onModel:{
+    onModel: {
         type: String,
         required: true,
-        enum :['Tweet', 'Comment']
+        enum: ['Tweet', 'Comment']
     },
-    user:{
-        type : mongoose.Schema.Types.ObjectId,
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
     },
-    commentable:{
-        type : mongoose.Schema.Types.ObjectId,
-        required : true,
-        refPath : 'onModel'
-    }
-},{
+    commentable: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        refPath: 'onModel'
+    },
+    comments :[
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Comment'
+        }
+    ]
+}, {
     timestamps: true
 });
 
