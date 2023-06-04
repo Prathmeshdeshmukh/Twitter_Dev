@@ -5,13 +5,9 @@ class UserRepository extends CrudRepository{
         super(User);
     }
 
-    async getByEmail(userEmail){
+    async findBy(data){
         try {
-            const user = await User.findOne({
-                where:{
-                    email :userEmail
-                }
-            })
+            const user = await User.findOne(data);
             console.log("user", user);
             return user;
         } catch (error) {

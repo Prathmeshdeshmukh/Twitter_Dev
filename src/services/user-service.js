@@ -24,18 +24,34 @@ class UserService{
         }
     }
 
-    async signIn(userEmail , userPassword){
+    async getByEmail(email){
         try {
-            const user = await this.userRepository.getByEmail(userEmail);
-            console.log(user.password);
-            const match = bcrypt.compareSync(userPassword, user.password);
-            if(!match){
-                console.log('Password doesnt match');
-                throw {error : 'Incorrect Password'}
-            }
+            const user = await this.userRepository.findBy({email});
             return user;
         } catch (error) {
             console.log("something went wrong in service layer", error)
+            
+        }
+    }
+
+    async signin(data){
+        try {
+            const user = await this.getByEmail(data.email);
+            if(!user){
+                throw {
+                    message : 'no user found'
+                }
+            }
+            if(!user.comparePassword(data.password)){
+                throw{
+                    message: 'incorrect password'
+                }
+            }
+            const token = user.genJWT();
+            return token;
+        } catch (error) {
+            console.log("something went wrong in service layer", error)
+         
             
         }
     }

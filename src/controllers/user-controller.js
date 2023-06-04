@@ -5,6 +5,7 @@ const userService = new UserService();
 export const signUp = async(req, res)=>{
     try {
         const response = await userService.signup({
+            
             email : req.body.email,
             password : req.body.password,
             username : req.body.username
@@ -48,12 +49,13 @@ export const getUser = async(req, res) =>{
     }
 }
 
-export const signInByEmail = async(req, res) =>{
+export const login = async(req, res) =>{
     try {
-        const user = await userService.signIn(req.params.email, req.params.password);
+        const token = await userService.signin(req.body);
+        console.log(token);
         return res.status(200).json({
-            data: user,
-            message : 'successfuly logged in a user',
+            data: token,
+            message : 'successfully logged in a user',
             err: {},
             success: true,
         })
